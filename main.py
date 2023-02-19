@@ -1,55 +1,51 @@
 import os
-
+import sys
+import pygame
 from flask import Flask, url_for, request
-from random import choice
-import requests
-from PIL import Image, UnidentifiedImageError
-
+from PIL import Image
 app = Flask(__name__)
 
 
-@app.route('/load_photo', methods=['POST', 'GET'])
+@app.route('/carousel')
 def sample_file_upload():
-    if request.method == 'GET':
-        return f'''<!doctype html>
-            <html lang="en">
-              <head>
-                <meta charset="utf-8">
-                <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-                 <link rel="stylesheet"
-                 href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
-                 integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
-                 crossorigin="anonymous">
-                <link rel="stylesheet" type="text/css" href="{url_for('static', filename='css/style.css')}" />
-                <title>Отбор астронавтов</title>
-              </head>
-              <body>
-                <h1 class="center">Загрузка фотографии</h1>
-                <div class="center">для участия в миссии</div>
-                    <form class="login_form" method="post" enctype="multipart/form-data">
-                        <div>Приложите фотографию</div>
-                        <div class="form-group">
-                            <input type="file" class="form-control-file" id="photo" name="file">
-                        </div>
-                        <img src="{url_for('static', filename='img/picture.png')}" alt="">
-                        <button type="submit" class="btn btn-primary">Отправить</button>
-                    </form>
-              </body>
-            </html>'''
-    elif request.method == 'POST':
-        request.files['file'].save("static/img/picture.png")
-        try:
-            im = Image.open("static/img/picture.png")
-            if im.size[0] > 430:
-                percent = 430 / im.size[0]
-                im = im.resize((int(im.size[0] * percent), int(im.size[1] * percent)))
-            im.save("static/img/picture.png")
-        except UnidentifiedImageError:
-            pass
-        return requests.get("http://127.0.0.1:8080/load_photo").content
+    return f"""<!doctype html>
+                        <html lang="en">
+                          <head>
+                            <meta charset="utf-8">
+                            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+                             <link rel="stylesheet"
+                             href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+                             integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+                             crossorigin="anonymous">
+                             <link rel="stylesheet" type="text/css" href="{url_for('static', filename='css/style.css')}" />
+                             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+                             <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+                             <title>Пейзажи Марса</title>
+                             <div id="carousel" class="carousel slide" data-ride="carousel">
+                              <div class="carousel-inner">
+                                {"".join([f'''<div class='carousel-item{" active" if i == 1 else ""}'>
+                                  <img src='{url_for('static', filename=f'img/r{i}.jpg')}'>
+                                </div>''' for i in range(1, 5)])}
+                              </div>
+                              <a class="carousel-control-prev" href="#carousel" role="button" data-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                              </a>
+                              <a class="carousel-control-next" href="#carousel" role="button" data-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                              </a>
+                             </div>"""
+
+
+def set_size(file, file2, w, h):
+    im1 = Image.open(file)
+    im2 = Image.new("RGB", (w, h), (255, 133, 0))
+    im2.paste(im1, ((im2.size[0] - im1.size[0]) // 2, (im2.size[1] - im1.size[1]) // 2))
+    im2.save(file2)
 
 
 if __name__ == '__main__':
+    pygame.init()
+    for i in range(1, 5):
+        set_size(f"static/img/p{i}.jpg", f"static/img/r{i}.jpg",
+                 pygame.display.Info().current_w, pygame.display.Info().current_h)
     app.run(port=8080, host='127.0.0.1')
-    if os.path.exists("static/img/picture.png"):
-        os.remove("static/img/picture.png")
