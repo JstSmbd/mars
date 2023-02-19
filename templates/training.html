@@ -1,14 +1,21 @@
 {% extends "base.html" %}
 
 {% block content %}
- <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}" />
- {% if "инженер" in profession or "строитель" in profession %}
-    <h2 class="center">Инженерные тренажеры<br>
-        <img src="{{ url_for('static', filename='img/ship2.png') }}">
-    </h2>
- {% else %}
-    <h2 class="center">Научные симуляторы<br>
-        <img src="{{ url_for('static', filename='img/ship1.png') }}">
-    </h2>
- {% endif %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}" />
+    <h2>Список профессий</h2>
+    {% if mode == "ul" %}
+    <ul>
+        {% for item in professions %}
+            <li>{{item}}</li>
+        {% endfor %}
+    </ul>
+    {% elif mode == "ol" %}
+    <ol>
+        {% for item in professions %}
+            <li>{{item}}</li>
+        {% endfor %}
+    </ol>
+    {% else %}
+    <div>Непонятный параметр</div>
+    {% endif %}
 {% endblock %}
