@@ -2,11 +2,23 @@
 
 {% block content %}
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}" />
-<h4>Фамилия: {{ surname }}</h4>
-<h4>Имя: {{ name }}</h4>
-<h4>Образование: {{ education }}</h4>
-<h4>Профессия: {{ profession }}</h4>
-<h4>Пол: {{ sex }}</h4>
-<h4>Мотивация: {{ motivation }}</h4>
-<h4>Готовы остаться на Марсе? {{ ready }}</h4>
+<div class="form-group">
+    <img src="{{ url_for('static', filename='img/mission.png') }}" id="img">
+    <label class="bold" for="img">Аварийный доступ</label>
+</div>
+<form method="post" enctype="multipart/form-data">
+    <div>id астронавта</div>
+    <input type="number" class="form-check-input" id="id1" name="id1">
+    <div><br></div>
+    <div>Пароль астронавта</div>
+    <input type="text" class="form-check-input" id="pas1" name="pas1">
+    <div><br></div>
+    <div>id капитана</div>
+    <input type="number" class="form-check-input" id="id2" name="id2">
+    <div><br></div>
+    <div>Пароль капитана</div>
+    <input type="text" class="form-check-input" id="pas2" name="pas2">
+    <div><br></div>
+    <button type="submit" class="btn btn-primary">Доступ</button>
+</form>
 {% endblock %}
