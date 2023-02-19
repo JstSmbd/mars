@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+ <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}" />
+ {% if "инженер" in profession or "строитель" in profession %}
+    <h2 class="center">Инженерные тренажеры<br>
+        <img src="{{ url_for('static', filename='img/ship2.png') }}">
+    </h2>
+ {% else %}
+    <h2 class="center">Научные симуляторы<br>
+        <img src="{{ url_for('static', filename='img/ship1.png') }}">
+    </h2>
+ {% endif %}
+{% endblock %}
