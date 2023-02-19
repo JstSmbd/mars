@@ -2,23 +2,9 @@
 
 {% block content %}
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}" />
-<div class="form-group">
-    <img src="{{ url_for('static', filename='img/mission.png') }}" id="img">
-    <label class="bold" for="img">Аварийный доступ</label>
-</div>
-<form method="post" enctype="multipart/form-data">
-    <div>id астронавта</div>
-    <input type="number" class="form-check-input" id="id1" name="id1">
-    <div><br></div>
-    <div>Пароль астронавта</div>
-    <input type="text" class="form-check-input" id="pas1" name="pas1">
-    <div><br></div>
-    <div>id капитана</div>
-    <input type="number" class="form-check-input" id="id2" name="id2">
-    <div><br></div>
-    <div>Пароль капитана</div>
-    <input type="text" class="form-check-input" id="pas2" name="pas2">
-    <div><br></div>
-    <button type="submit" class="btn btn-primary">Доступ</button>
-</form>
+<h1 class="center">Размещение по каютам</h1>
+{% set a = "Каюта №" %}
+{% for item in list %}
+        <h4>{{item}} - {{a}} {{loop.index}} {% if loop.first %} - капитан корабля {% endif %}</h4>
+{% endfor %}
 {% endblock %}
