@@ -1,21 +1,12 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}" />
-    <h2>Список профессий</h2>
-    {% if mode == "ul" %}
-    <ul>
-        {% for item in professions %}
-            <li>{{item}}</li>
-        {% endfor %}
-    </ul>
-    {% elif mode == "ol" %}
-    <ol>
-        {% for item in professions %}
-            <li>{{item}}</li>
-        {% endfor %}
-    </ol>
-    {% else %}
-    <div>Непонятный параметр</div>
-    {% endif %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}" />
+<h4>Фамилия: {{ surname }}</h4>
+<h4>Имя: {{ name }}</h4>
+<h4>Образование: {{ education }}</h4>
+<h4>Профессия: {{ profession }}</h4>
+<h4>Пол: {{ sex }}</h4>
+<h4>Мотивация: {{ motivation }}</h4>
+<h4>Готовы остаться на Марсе? {{ ready }}</h4>
 {% endblock %}

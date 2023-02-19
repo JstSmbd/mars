@@ -29,3 +29,8 @@ form.login_form {
     text-decoration: underline;
     text-decoration-style: solid;
 }
+
+h4 {
+    color: SlateGrey;
+    padding-left: 20px;
+}
