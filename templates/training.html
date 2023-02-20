@@ -1,24 +1,22 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2 class="center">Оформление каюты</h2>
-<table bgcolor="lightgray" cellspacing="0px" cellpadding="0px" align="center">
-        <tr>
-                <td>
-                        <div class="center">Цвет стен</div>
-                </td>
-                <td>
-                        <div class="center">Эмблема</div>
-                </td>
-        </tr>
-        <tr>
-                <td>
-                        <img src="{{ url_for('static', filename='img/' + color) }}">
-                </td>
-                <td>
-                        <img src="{{url_for('static', filename='img/' + picture)}}">
-                </td>
-        </tr>
-
-</table>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <h2 class="center">Пейзажи Марса</h2>
+    <div id="carousel" class="carousel slide" data-ride="carousel" align="center" data-pause=false>
+      <div class="carousel-inner">
+        {% for item in names %}
+            <div class="carousel-item {% if loop.first %} active {% endif %}">
+              <img src="{{ url_for('static', filename='img/' + item + '.jpg') }}">
+            </div>
+        {% endfor %}
+      </div>
+    </div>
+<form class="load_file" method="post" enctype="multipart/form-data">
+    <div>
+        {{ form.file.label }}{{ form.file(type="file", class="form-control") }}<br>
+        {{ form.submit(type="submit", class="btn btn-primary") }}
+    </div>
+</form>
 {% endblock %}
